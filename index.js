@@ -39,11 +39,26 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
   
 }
 
+Person.prototype.eat = function(edible){
+  if(this.stomach.length < 10){
+    this.stomach.push(edible);
+  }
+}
 
+Person.prototype.poop = function(){
+  this.stomach =[];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
+}
 
 
 
@@ -63,8 +78,17 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, mpg) {
+  this.model = model;
+  this.milesPerGallon = mpg;
+  this.tank = 0;
+  this.odometer = 0;
+
   
+}
+
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
 }
 
 
@@ -75,18 +99,24 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
  
+}
+Baby.prototype = Object.create(Person.prototype)
+Baby.prototype.play = function(){
+  return 'Playing with ${this.favoriteToy}';
 }
 
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. window binding, which we should use never. when none of the other rules are applicable. this will return the window/global object in node if not it results undefined.
+  2. implicit binding which is when the function is invoked look toward the left of the dot.
+  3. explicit binding which is when using .call .apply. or .bind to 'explicitly' pass in what 'this' keyword is
+  4. new binding which is constructor function applicable so when a function is created as a constructor it points to the newly created object.
 */
 
 
